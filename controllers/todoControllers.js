@@ -35,7 +35,6 @@ class TodosController {
   async updateTodo(req, res){
     const { id } = req.params;
     const { title,  body } = req.body;
-
     if(!ObjectId.isValid(id) && !id.match(/^[a-fA-F0-9]{24}$/)){
       return res.status(404).send({
         success: 'false',
@@ -50,9 +49,9 @@ class TodosController {
         const updated = await Todo.findByIdAndUpdate(id, { done: !done }, {new:true});
         return res.status(200).json(updated);
       }
-      if(title && body) {
-        const todo = { title, body }
-        const updated = await Todo.findByIdAndUpdate(id, { todo }, {new:true});
+      if(title && body) { 
+        const newTodo = { title, body }
+        const updated = await Todo.findByIdAndUpdate(id, newTodo, {new:true});
         return res.status(200).json(updated);
       }
     } catch (error) {
