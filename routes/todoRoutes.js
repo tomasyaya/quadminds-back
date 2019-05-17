@@ -5,6 +5,7 @@ const router = express.Router();
 
 
 router.post('/todos', todosController.createTodo);
+router.put('/todos/:id', todosController.updateTodo);
 router.get('/todos', todosController.getAllTodos);
 
 

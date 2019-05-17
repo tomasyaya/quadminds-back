@@ -8,8 +8,9 @@ let Todo = new Schema({
   body: {
     type: String
   },
-  done: {
-    type: Boolean
+  status: {
+    type: Boolean,
+    default: false
   }
 },{ timestamps: true }
 );
