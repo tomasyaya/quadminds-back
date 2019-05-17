@@ -4,7 +4,7 @@ const todosController = require('../controllers/todoControllers');
 const router = express.Router();
 
 
-router.post('/todos', TodoController.createTodo);
+router.post('/todos', todosController.createTodo);
 
 
 module.exports = router;
