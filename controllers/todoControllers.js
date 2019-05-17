@@ -4,6 +4,15 @@ const Todo = require('../models/Todos');
 
 class TodosController {
 
+  async getAllTodos(req, res) {
+    try {
+      const todos = await Todo.find();
+      res.json(todos);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async createTodo(req, res) {
     let newTodo = new Todo(req.body);
     console.log('hit the route!!')
