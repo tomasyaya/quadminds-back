@@ -8,8 +8,8 @@ const port = process.env.PORT || 4000;
 const cors = require('cors');
 require('dotenv').config();
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const todoRoutes = require('./routes/todoRoutes');
+
 
 mongoose.connect(process.env.MONGODB_URI, {
   keepAlive: true,
@@ -40,8 +40,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', todoRoute);
 
 
 
