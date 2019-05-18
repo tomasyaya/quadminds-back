@@ -13,6 +13,16 @@ class TodosController {
     }
   }
 
+  async getTodo(req, res) {
+    const { id } = req.params;
+    try {
+      const todo = await Todo.findById(id);
+      res.json(todo);
+    } catch (error) {
+      res.json(error);
+    }
+  }
+
   async createTodo(req, res) {
     let newTodo = new Todo(req.body);
     if (!req.body.title) {
