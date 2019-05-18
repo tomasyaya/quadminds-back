@@ -9,7 +9,10 @@ class TodosController {
       const todos = await Todo.find();
       res.json(todos);
     } catch (error) {
-      res.json(error);
+      res.status(400).json({
+        success: 'false',
+        message: 'Unable to get all todos'
+      });
     }
   }
 
@@ -19,14 +22,17 @@ class TodosController {
       const todo = await Todo.findById(id);
       res.json(todo);
     } catch (error) {
-      res.json(error);
+      res.status(400).json({
+        success: 'false',
+        message: 'Unable to get todo',
+      });
     }
   }
 
   async createTodo(req, res) {
     let newTodo = new Todo(req.body);
     if (!req.body.title) {
-      return res.status(400).send({
+      return res.status(400).json({
         success: 'false',
         message: 'title is required',
       });
@@ -35,7 +41,7 @@ class TodosController {
       const todo = await newTodo.save();
       res.status(200).json(todo);
     } catch (error) {
-      res.status(400).send({
+      res.status(400).json({
         success: 'false',
         message: 'Unable to save to database',
       });
@@ -46,7 +52,7 @@ class TodosController {
     const { id } = req.params;
     const { title,  body } = req.body;
     if(!ObjectId.isValid(id) && !id.match(/^[a-fA-F0-9]{24}$/)){
-      return res.status(404).send({
+      return res.status(404).json({
         success: 'false',
         message: 'todo does not exist',
       });
@@ -65,14 +71,17 @@ class TodosController {
         return res.status(200).json(updated);
       }
     } catch (error) {
-      res.json(error);
+      es.status(404).json({
+        success: 'false',
+        message: 'Unable to update todo',
+      });
     }
   }
 
   async deleteTodo(req, res){
     const {id} = req.params;
     if(!ObjectId.isValid(id) && !id.match(/^[a-fA-F0-9]{24}$/)){
-      return res.status(404).send({
+      return res.status(404).json({
         success: 'false',
         message: 'todo does not exist',
       });
@@ -81,7 +90,7 @@ class TodosController {
       const deleted = await Todo.findByIdAndRemove(id);
       return res.status(200).json(deleted);
     } catch (error) {
-      res.status(400).send({
+      res.status(400).json({
         success: 'false',
         message: 'Unable to delete from database',
       });
