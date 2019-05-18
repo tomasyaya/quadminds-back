@@ -9,7 +9,7 @@ class TodosController {
       const todos = await Todo.find();
       res.json(todos);
     } catch (error) {
-      console.log(error);
+      res.json(error);
     }
   }
 
@@ -56,6 +56,25 @@ class TodosController {
       }
     } catch (error) {
       res.json(error);
+    }
+  }
+
+  async deleteTodo(req, res){
+    const {id} = req.params;
+    if(!ObjectId.isValid(id) && !id.match(/^[a-fA-F0-9]{24}$/)){
+      return res.status(404).send({
+        success: 'false',
+        message: 'todo does not exist',
+      });
+    }
+    try {
+      const deleted = await Todo.findByIdAndRemove(id);
+      return res.status(200).json(deleted);
+    } catch (error) {
+      res.status(400).send({
+        success: 'false',
+        message: 'Unable to delete from database',
+      });
     }
   }
 
