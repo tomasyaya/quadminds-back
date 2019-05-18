@@ -45,8 +45,8 @@ class TodosController {
     try {
       if(!title || ! body) {
         const todo = await Todo.findById(id)
-        const { done } = todo
-        const updated = await Todo.findByIdAndUpdate(id, { done: !done }, {new:true});
+        const { status } = todo
+        const updated = await Todo.findByIdAndUpdate(id, { status: !status }, {new:true});
         return res.status(200).json(updated);
       }
       if(title && body) { 
